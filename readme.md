@@ -1,4 +1,39 @@
 version control:
+##### v0.8a - minor update
+- Same like 0.8 except these:
+	- fix region2 to SG
+	- swap order of search words
+	- cleaner tokenize word
+- File changes
+	- ADD gspider8a.py
+	- REPLACE items.py
+	- REPLACE settings.py
+	- REPLACE pipelines.py
+
+##### v0.8 - major update
+- This is assume you have your python environment installed with all depdendencies from version 0.7 and eveyrthing is ready to use. 
+- Now allow sending data to our mySQL server. Don't forget to change mysql server on `pipelines.py` on line 18 to line 22:  
+```
+	user='',
+	password='',
+	host='',
+	port=,
+	database=''
+
+```
+- Adding 5 more columns:
+	- tokens - splitted word based treeworldbank
+	- stemmed - tokens after stemmed
+	- lemmatized - tokens after lematized
+	- sentiment analysis
+	- subjectivity analysis
+- File changes
+	- ADD gspider8.py
+	- REPLACE items.py
+	- REPLACE settings.py
+	- REPLACE pipelines.py
+- Latest command to run `scrapy crawl gnews8`
+
 ##### v0.7 - post 27/08/2021 variant
 - This is assume you have your python environment installed with all dependencies from version 0.6b and eveyrthing is ready to use 
 - File changes:
@@ -7,8 +42,8 @@ version control:
 - Parameter is changed in the code from line 14 to line 18:  
 ```    
 	# Change Parameter Here, 
-    startDate =  datetime.date(2020, 1, 1)
-    endDate = datetime.date(2020, 1, 3)
+    startDate =  datetime.date(2020, 7, 8)
+    endDate = datetime.date(2020, 7, 15)
     region1 = "china"
     region2 = "CN"
     query = "semiconductor"

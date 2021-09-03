@@ -8,7 +8,7 @@
 from itemadapter import ItemAdapter
 import mysql.connector
 
-class GooglenewsPipeline:
+class GooglenewsPipeline(object):
     def __init__(self):
         self.create_connection()
         self.create_table()
@@ -18,7 +18,7 @@ class GooglenewsPipeline:
             user='',
             password='',
             host='',
-            port=3306,
+            port=,
             database=''
         )
 
@@ -26,22 +26,27 @@ class GooglenewsPipeline:
     
     # 'start','end','query', 'region', 'title', 'excerpt', 'date', 'source', 'link' 
     def create_table(self):
-        self.curr.execute("""CREATE TABLE IF NOT EXISTS semiconductor(
+        self.curr.execute("""CREATE TABLE IF NOT EXISTS semiconductor8a(
             id INT AUTO_INCREMENT PRIMARY KEY,
-            query VARCHAR(255),
-            region VARCHAR(2),
+            query TEXT,
+            region VARCHAR(255),
             title TEXT,
             excerpt TEXT,
             date DATE,
             source VARCHAR(255),
-            link TEXT
+            link VARCHAR(255),
+            tokens TEXT,
+            stemmed TEXT,
+            lemmatized TEXT,
+            sentiment FLOAT,
+            subjective FLOAT
         )""")
 
     def process_item(self, item, spider):
-        self.store_db(ItemAdapter(item).asdict())
+        self.store_db(item)
 
     def store_db(self, item):
-        myquery = """INSERT into semiconductor
+        myquery = """INSERT into semiconductor8a
         (
             query,
             region,
@@ -49,18 +54,28 @@ class GooglenewsPipeline:
             excerpt,
             date,
             source,
-            link
+            link,
+            tokens,
+            stemmed,
+            lemmatized,
+            sentiment,
+            subjective
         )
-        values(%s,%s,%s,%s,%s,%s,%s,%s,%s)
+        values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)
         """
         value = (
-            item["query"][0],
-            item["region"][0],
-            item["title"],
-            item["excerpt"],
-            item["date"],
-            item["source"],
-            item["link"]
+            item['query'][0],
+            item['region'][0],
+            item['title'],
+            item['excerpt'][0],
+            item['date'],
+            item['source'],
+            item['link'],
+            item['tokens'][0],
+            item['stemmed'][0],
+            item['lemmatized'][0],
+            item['sentiment'],
+            item['subjective']
         )
 
         self.curr.execute(myquery, value)
