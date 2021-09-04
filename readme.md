@@ -32,7 +32,7 @@ version control:
 	- REPLACE items.py
 	- REPLACE settings.py
 	- REPLACE pipelines.py
-- Latest command to run `scrapy crawl gnews8`
+- Latest command to run `scrapy crawl gnews8a`
 
 ##### v0.7 - post 27/08/2021 variant
 - This is assume you have your python environment installed with all dependencies from version 0.6b and eveyrthing is ready to use 
