@@ -1,4 +1,5 @@
 version control:
+
 ##### v0.8a - minor update
 - Same like 0.8 except these:
 	- fix region2 to SG
@@ -8,10 +9,13 @@ version control:
 	- ADD gspider8a.py
 	- REPLACE items.py
 	- REPLACE settings.py
-	- REPLACE pipelines.py
-
+	- REPLACE pipelines.py 
+- For NLTK download 
+	- For line 11 on gspider8a.py change it to nltk.download() and uncomment it. Run it once and comment it again
+			
 ##### v0.8 - major update
-- This is assume you have your python environment installed with all depdendencies from version 0.7 and eveyrthing is ready to use. 
+- This is assume you have your python environment installed with all dependencies from version 0.7 and eveyrthing is ready to use. 
+- TYPE pip install mysql-connector-python (for first time download) 
 - Now allow sending data to our mySQL server. Don't forget to change mysql server on `pipelines.py` on line 18 to line 22:  
 ```
 	user='',
