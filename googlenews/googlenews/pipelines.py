@@ -6,20 +6,36 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
+from scrapy.exceptions import DropItem
 import mysql.connector
 
+class DuplicatesPipeline:
+
+    def __init__(self):
+        self.titles_seen = set()
+
+    def process_item(self, item, spider):
+        adapter = ItemAdapter(item)
+        if adapter['title'] in self.titles_seen:
+            raise DropItem(f"Duplicate item found: {item!r}")
+        else:
+            self.titles_seen.add(adapter['title'])
+            return item
+
 class GooglenewsPipeline(object):
+    duplicatelist =[]
+
     def __init__(self):
         self.create_connection()
         self.create_table()
     
     def create_connection(self):
         self.conn = mysql.connector.connect(
-            user='',
-            password='',
-            host='',
-            port=,
-            database=''
+            user='fintechlab',
+            password='FinTechLab',
+            host='137.132.92.94',
+            port=12865,
+            database='b10_fintech5c',
         )
 
         self.curr = self.conn.cursor()
@@ -43,14 +59,27 @@ class GooglenewsPipeline(object):
         )""")
 
     def process_item(self, item, spider):
+        self.check_duplicate(item)
         self.store_db(item)
 
+    def check_duplicate(self, item):
+        newTitle = item['title']
+        newSource = item['source']
+        findquery = """ SELECT title FROM semiconductor8a WHERE title = %s AND source = %s """
+
+        self.curr.execute(findquery,(newTitle,newSource))
+
+        for x in self.curr:
+            self.duplicatelist.append(x)
+
+
     def store_db(self, item):
-        myquery = """INSERT into semiconductor8a
+
+        insertquery = """INSERT into semiconductor8a
         (
             query,
             region,
-            title,
+            title ,
             excerpt,
             date,
             source,
@@ -78,8 +107,12 @@ class GooglenewsPipeline(object):
             item['subjective']
         )
 
-        self.curr.execute(myquery, value)
-        self.conn.commit()
+        if len(self.duplicatelist) > 0:
+            print(str(len(self.duplicatelist)) + " duplicate(s) found")
+        else:
+            self.curr.execute(insertquery, value)
+            self.conn.commit()
+            
     
     def close_spider(self, spider):
         self.conn.close

@@ -29,33 +29,35 @@ month={
     "Dec":"12"
 }
 
+modifier = 0
 
-# def convert_month(value):
-#     old_date = value.split("/")
-#     new_date = old_date[2] + "-" + old_date[0] + "-" + old_date[1]
+def preconvert_date(value):
+    global new_date
+    today = datetime.date.today()
+    day_differences = modifier*int(value)
+    date_reducer = datetime.timedelta(days = day_differences)
+    new_date = (today - date_reducer).strftime('%Y-%m-%d')
 
-#     return new_date
 
 def convert_pubdate(value):
-    modifier = 0
+    global new_date
+    global modifier
     old_date = value.split()
-    day_differences = modifier*int(old_date[0])
-    today = datetime.date.today()
-    date_reducer = datetime.timedelta(days = day_differences)
-    if 'hour' in value or 'hours' in value:
-        new_date = (today - date_reducer).strftime('%Y-%b-%d')
-    elif 'day' in value or 'days' in value:
-        modifier=1
-        new_date = (today - date_reducer).strftime('%Y-%b-%d')
-    elif 'week' in value or 'weeks' in value:
-        modifier=7
-        new_date = (today - date_reducer).strftime('%Y-%b-%d')
-    elif 'month' in value or 'months' in value:
-        modifier=30
-        new_date = (today - date_reducer).strftime('%Y-%b-%d')
-    else:
-        new_date = old_date[2] + "-" + month[old_date[1]] + "-" + old_date[0]
     
+    if 'hour' in value or 'hours' in value:
+        preconvert_date(old_date[0])
+    elif 'day' in value or 'days' in value:
+        modifier += 7
+        preconvert_date(old_date[0])
+    elif 'week' in value or 'weeks' in value:
+        modifier += 7
+        preconvert_date(old_date[0])
+    elif 'month' in value or 'months' in value:
+        modifier += 30
+        preconvert_date(old_date[0])
+    else:
+        new_date = old_date[2] + "-" + month(old_date[1]) + "-" + old_date[0]
+
     return new_date
 
 def strip_value(value):

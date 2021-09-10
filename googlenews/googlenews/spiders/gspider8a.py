@@ -16,9 +16,9 @@ class gSpider(scrapy.Spider):
     skipped = ["Financial Times"]
 
     # Change Parameter Here, 
-    startDate =  datetime.date(2020, 1, 1)
-    endDate = datetime.date(2020, 1, 3)
-    region = "china"
+    startDate =  datetime.date(2021, 8, 23)
+    endDate = datetime.date(2021, 8, 25)
+    region = "south-korea"
     query = "semiconductor"
 
     def start_requests(self):
@@ -112,8 +112,8 @@ class gSpider(scrapy.Spider):
                 pass
 
 
-        nextPage = response.css('[id="pnnext"]').attrib['href']
-        nextLink = "https://google.com" + nextPage
+        # nextPage = response.css('[id="pnnext"]').attrib['href']
+        # nextLink = "https://google.com" + nextPage
 
-        if nextPage is not None:
-            yield response.follow(nextLink, callback=self.parse)
+        # if nextPage is not None:
+        #     yield response.follow(nextLink, callback=self.parse)

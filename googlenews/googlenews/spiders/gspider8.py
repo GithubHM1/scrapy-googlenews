@@ -15,8 +15,8 @@ class gSpider(scrapy.Spider):
     skipped = ["Financial Times"]
 
     # Change Parameter Here, 
-    startDate =  datetime.date(2020, 1, 1)
-    endDate = datetime.date(2020, 1, 3)
+    startDate =  datetime.date(2020, 1, 3)
+    endDate = datetime.date(2020, 1, 5)
     region = "china"
     ccode = "CN"
     query = "semiconductor"
