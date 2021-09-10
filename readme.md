@@ -36,7 +36,7 @@ version control:
 	- REPLACE items.py
 	- REPLACE settings.py
 	- REPLACE pipelines.py
-- Latest command to run `scrapy crawl gnews8a`
+- Latest command to run `scrapy crawl gnews8a`  IMPT: Always ensure you crawl when you're in ENV setting. Run 'source .env/bin/activate' in Terminal to change your setting to ENV setting.
 
 ##### v0.7 - post 27/08/2021 variant
 - This is assume you have your python environment installed with all dependencies from version 0.6b and eveyrthing is ready to use 
