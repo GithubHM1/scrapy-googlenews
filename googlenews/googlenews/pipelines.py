@@ -31,18 +31,18 @@ class GooglenewsPipeline(object):
     
     def create_connection(self):
         self.conn = mysql.connector.connect(
-            user='fintechlab',
-            password='FinTechLab',
-            host='137.132.92.94',
-            port=12865,
-            database='b10_fintech5c',
+            user='',
+            password='',
+            host='',
+            port=,
+            database='',
         )
 
         self.curr = self.conn.cursor()
     
     # 'start','end','query', 'region', 'title', 'excerpt', 'date', 'source', 'link' 
     def create_table(self):
-        self.curr.execute("""CREATE TABLE IF NOT EXISTS semiconductor8a(
+        self.curr.execute("""CREATE TABLE IF NOT EXISTS semiconductor8b(
             id INT AUTO_INCREMENT PRIMARY KEY,
             query TEXT,
             region VARCHAR(255),
@@ -65,7 +65,7 @@ class GooglenewsPipeline(object):
     def check_duplicate(self, item):
         newTitle = item['title']
         newSource = item['source']
-        findquery = """ SELECT title FROM semiconductor8a WHERE title = %s AND source = %s """
+        findquery = """ SELECT title FROM semiconductor8b WHERE title = %s AND source = %s """
 
         self.curr.execute(findquery,(newTitle,newSource))
 
@@ -75,7 +75,7 @@ class GooglenewsPipeline(object):
 
     def store_db(self, item):
 
-        insertquery = """INSERT into semiconductor8a
+        insertquery = """INSERT into semiconductor8b
         (
             query,
             region,

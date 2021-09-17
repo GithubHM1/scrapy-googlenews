@@ -56,7 +56,7 @@ def convert_pubdate(value):
         modifier += 30
         preconvert_date(old_date[0])
     else:
-        new_date = old_date[2] + "-" + month(old_date[1]) + "-" + old_date[0]
+        new_date = old_date[2] + "-" + month[old_date[1]] + "-" + old_date[0]
 
     return new_date
 

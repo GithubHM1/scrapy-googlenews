@@ -1,4 +1,18 @@
 version control:
+##### v0.8b - minor update
+- update all CSS Structure to cater for Google recent changes on CSS on 16-09-2021
+- File changes:
+	- DELETE gspider8a.py
+	- ADD gspider8b.py
+
+##### v0.8a(improved) - minor update
+- File changes:
+	- REPLACE items.py
+	- REPLACE pipelines.py
+- Prevent duplicate entry across multiple crawler. 
+	- It is done by checking MySql for duplicate data prior inserting data to mySQL
+	- also checking on duplicate from all articles crawled 
+- Fixed date issue on crawling from 1 month ago.
 
 ##### v0.8a - minor update
 - Same like 0.8 except these:
@@ -7,8 +21,7 @@ version control:
 	- cleaner tokenize word
 - File changes
 	- ADD gspider8a.py
-	- REPLACE items.py
-	- REPLACE settings.py
+
 	- REPLACE pipelines.py 
 - For NLTK download 
 	- For line 11 on gspider8a.py change it to nltk.download() and uncomment it. Run it once and comment it again

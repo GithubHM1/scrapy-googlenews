@@ -9,16 +9,16 @@ import string
 
 class gSpider(scrapy.Spider):
     # nltk.download('punkt')
-    name = 'gnews8a'
+    name = 'gnews8b'
     delta = datetime.timedelta(days=1)
 
     # this is where we put skipped list
     skipped = ["Financial Times"]
 
     # Change Parameter Here, 
-    startDate =  datetime.date(2021, 8, 23)
-    endDate = datetime.date(2021, 8, 25)
-    region = "south-korea"
+    startDate =  datetime.date(2019, 3, 25)
+    endDate = datetime.date(2019, 3, 25)
+    region = "united+states"
     query = "semiconductor"
 
     def start_requests(self):
@@ -29,9 +29,9 @@ class gSpider(scrapy.Spider):
     
     def parse(self, response):
 
-        for articles in response.css('div.dbsr'):
+        for articles in response.css('g-card.ftSUBd'):
             
-            news_office = articles.css('div.XTjFC.WF4CUc::text').get()
+            news_office = articles.css('div.CEMjEf span::text').get()
 
             # a function to clean article
             def clean_article(value):
@@ -69,7 +69,7 @@ class gSpider(scrapy.Spider):
                     subjective = analysis.subjectivity
 
                 except:
-                    summary = articles.css('div.Y3v8qd::text').get()
+                    summary = articles.css('div.GI74Re.nDgy9d::text').get()
                     new_summary = clean_article(summary)
 
                     tokenizer = nltk.tokenize.TreebankWordTokenizer()
@@ -91,10 +91,10 @@ class gSpider(scrapy.Spider):
 
                 l = ItemLoader(item = GooglenewsItem(), selector=articles)
 
-                l.add_css('title', 'div.JheGif.nDgy9d')
+                l.add_css('title', 'div.mCBkyc.JQe2Ld.nDgy9d')
                 l.add_value('excerpt', summary)
-                l.add_css('source','div.XTjFC.WF4CUc')
-                l.add_css('date', 'span.WG9SHc span')
+                l.add_css('source','div.CEMjEf span')
+                l.add_css('date', 'p.S1FAPd.ecEXdc span')
                 l.add_value('query', self.query)
                 # l.add_value('start', self.start)
                 # l.add_value('end',self.end)
